@@ -11,6 +11,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'prettier/@typescript-eslint'],
   rules: {
-    '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }]
+    '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }]
   }
 };
