@@ -9,14 +9,24 @@
     "vscode": "^1.5.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
   ],
   "activationEvents": [
+    "onCommand:extension.colorSpaceShift.commands",
+    "onCommand:extension.colorSpaceShift.hexSmartConvert",
     "onCommand:extension.colorSpaceShift.hslSmartConvert"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
+      {
+        "command": "extension.colorSpaceShift.commands",
+        "title": "Convert Color..."
+      },
+      {
+        "command": "extension.colorSpaceShift.hexSmartConvert",
+        "title": "Convert Color to #RRGGBB/AA"
+      },
       {
         "command": "extension.colorSpaceShift.hslSmartConvert",
         "title": "Convert Color to HSL/A"
