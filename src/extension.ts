@@ -2,7 +2,36 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import * as colorConvert from 'color-convert'
+import * as Color from 'color'
+
+type ConversionCallback = (color: Color) => string
+
+function replaceColorTest(conversion: ConversionCallback) {
+    const editor = vscode.window.activeTextEditor;
+    const { document, selections } = editor;
+
+    selections.forEach(selection => {
+        const text = document.getText(selection)
+
+        let color: Color
+
+        try {
+            color = Color(text.toLowerCase())
+        } catch {
+            // Trim the selected text in case it's really long
+            const badSelection = text.substring(0, 30)
+            vscode.window.showErrorMessage(`Could not convert color '${badSelection}', unknown format.`)
+            return;
+        }
+
+        const colorString = conversion(color)
+
+        editor.edit((editBuilder) => {
+            editBuilder.replace(selection, colorString)
+        })
+    })
+}
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -15,32 +44,8 @@ export function activate(context: vscode.ExtensionContext) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-
-        const editor = vscode.window.activeTextEditor;
-        const { document, selections } = editor;
-
-        // document.getText(selections[0])
-        // selections[0].start
-
-        // Display a message box to the user
-        selections.forEach(selection => {
-            const text = document.getText(selection)
-            console.log("Selected text:", text)
-            console.log("Converted text:", colorConvert.hex.hsl(text))
-
-            const hsl = `hsl(${colorConvert.hex.hsl(text).join(",")})`
-
-            editor.edit((editBuilder) => {
-                editBuilder.replace(selection, hsl)
-            })
-
-            // vscode.window.showInformationMessage(colorConvert.hex.hsl(text).join(", "));
-        })
+    let disposable = vscode.commands.registerCommand('extension.colorSpaceShift.hslSmartConvert', () => {
+        replaceColorTest(color => color.hsl().string())
     });
 
     context.subscriptions.push(disposable);
