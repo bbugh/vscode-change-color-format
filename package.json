@@ -14,7 +14,8 @@
   "activationEvents": [
     "onCommand:extension.colorSpaceShift.commands",
     "onCommand:extension.colorSpaceShift.hexSmartConvert",
-    "onCommand:extension.colorSpaceShift.hslSmartConvert"
+    "onCommand:extension.colorSpaceShift.hslSmartConvert",
+    "onCommand:extension.colorSpaceShift.rgbSmartConvert"
   ],
   "main": "./out/src/extension",
   "contributes": {
@@ -29,7 +30,11 @@
       },
       {
         "command": "extension.colorSpaceShift.hslSmartConvert",
-        "title": "Convert Color to HSL/A"
+        "title": "Convert Color to hsl/hsla()"
+      },
+      {
+        "command": "extension.colorSpaceShift.rgbSmartConvert",
+        "title": "Convert Color to rgb/rgba()"
       }
     ]
   },

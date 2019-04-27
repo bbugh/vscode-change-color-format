@@ -35,7 +35,7 @@ const commands = {
   hex: {
     description: 'Convert color to #RRGGBB/AA',
     // color library drops the alpha for hex :(
-    func: () =>
+    transform: () =>
       replaceColorText(color => {
         const rgbColor = color.rgb().object();
 
@@ -48,8 +48,12 @@ const commands = {
       })
   },
   hsl: {
-    description: 'Convert color to HSL/A',
-    func: () => replaceColorText(color => color.hsl().string())
+    description: 'Convert color to hsl/hsla()',
+    transform: () => replaceColorText(color => color.hsl().round().string()) // prettier-ignore
+  },
+  rgb: {
+    description: 'Convert color to rgb/rgba()',
+    transform: () => replaceColorText(color => color.rgb().round().string()) // prettier-ignore
   }
 };
 
@@ -68,12 +72,12 @@ export function activate(context: vscode.ExtensionContext): void {
       description: commands[label].description
     }));
 
-    vscode.window.showQuickPick(items, opts).then(option => commands[option.label].func());
+    vscode.window.showQuickPick(items, opts).then(option => commands[option.label].transform());
   });
 
   // Create individual commands
   Object.entries(commands).forEach(([key, options]) => {
-    vscode.commands.registerCommand(`extension.colorSpaceShift.${key}SmartConvert`, options.func);
+    vscode.commands.registerCommand(`extension.colorSpaceShift.${key}SmartConvert`, options.transform);
   });
 }
 
