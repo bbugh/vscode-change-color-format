@@ -5,7 +5,7 @@ import * as Color from 'color';
 
 type ConversionCallback = (color: Color) => string;
 
-function replaceColorText(conversion: ConversionCallback): void {
+async function replaceColorText(conversion: ConversionCallback): Promise<boolean> {
   const editor = vscode.window.activeTextEditor;
   const { document, selections } = editor;
 
@@ -13,7 +13,7 @@ function replaceColorText(conversion: ConversionCallback): void {
     return;
   }
 
-  editor.edit(editBuilder => {
+  return editor.edit(editBuilder => {
     selections.forEach(selection => {
       const text = document.getText(selection);
 
