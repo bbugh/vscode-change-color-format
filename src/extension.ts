@@ -9,23 +9,26 @@ function replaceColorText(conversion: ConversionCallback): void {
   const editor = vscode.window.activeTextEditor;
   const { document, selections } = editor;
 
-  selections.forEach(selection => {
-    const text = document.getText(selection);
+  if (!selections.length) {
+    return;
+  }
 
-    let color: Color;
+  editor.edit(editBuilder => {
+    selections.forEach(selection => {
+      const text = document.getText(selection);
 
-    try {
-      color = Color(text.toLowerCase());
-    } catch {
-      // Trim the selected text in case it's really long
-      const badSelection = text.substring(0, 30);
-      vscode.window.showErrorMessage(`Could not convert color '${badSelection}', unknown format.`);
-      return;
-    }
+      let color: Color;
 
-    const colorString = conversion(color);
+      try {
+        color = Color(text.toLowerCase());
+      } catch {
+        // Trim the selected text in case it's really long so the error message doesn't blow up
+        const badSelection = text.substring(0, 30);
+        vscode.window.showErrorMessage(`Could not convert color '${badSelection}', unknown format.`);
+        return;
+      }
 
-    editor.edit(editBuilder => {
+      const colorString = conversion(color);
       editBuilder.replace(selection, colorString);
     });
   });
