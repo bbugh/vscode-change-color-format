@@ -26,9 +26,14 @@ async function assertCommandResult(command: string, content: string, result: str
   const editor = await openDocument(content);
   editorSelectAll(editor);
 
-  return vscode.commands.executeCommand(command).then(() => {
-    assert.equal(editor.document.getText(), result);
-  });
+  return vscode.commands
+    .executeCommand(command)
+    .then(() => {
+      assert.equal(editor.document.getText(), result);
+    })
+    .then(() => {
+      vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    });
 }
 
 suite('hex command', () => {
