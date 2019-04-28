@@ -9,10 +9,6 @@ async function replaceColorText(conversion: ConversionCallback): Promise<boolean
   const editor = vscode.window.activeTextEditor;
   const { document, selections } = editor;
 
-  if (!selections.length) {
-    return;
-  }
-
   return editor.edit(editBuilder => {
     selections.forEach(selection => {
       const text = document.getText(selection);
@@ -85,6 +81,3 @@ export function activate(_context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand(`extension.changeColorFormat.${key}SmartConvert`, options.transform);
   });
 }
-
-// this method is called when your extension is deactivated
-export function deactivate(): void {}
