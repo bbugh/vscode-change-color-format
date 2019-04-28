@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - '7.5'
+
+sudo: false
+
+cache: yarn
+
+os:
+  - osx
+  - linux
+
+install:
+  - yarn
+  - yarn vscode:prepublish
+
+script:
+  - yarn format
+  - yarn lint
+  - yarn test --silent

@@ -45,11 +45,11 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
-    "format": "prettier --write src/**/*.ts test/**/*.ts",
+    "format": "prettier --check --write src/**/*.ts test/**/*.ts",
     "lint": "eslint --fix src/**/*.ts test/**/*.ts",
     "package": "vsce package",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
+    "test": "CODE_DISABLE_EXTENSIONS=true node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
