@@ -111,3 +111,26 @@ suite('rgb', () => {
     return assertCommandResult(command, 'tomato', 'rgb(255, 99, 71)');
   });
 });
+
+suite('multi-select replace', () => {
+  test('replacing multiple colors at once via multi-select', () => {
+    const content = `tomato\nhsl(100,50%,50%)\nrgba(50, 150, 250)\nmintcream`;
+    const expected = `hsl(9, 100%, 64%)\nhsl(100, 50%, 50%)\nhsl(210, 95%, 59%)\nhsl(150, 100%, 98%)`;
+
+    return openDocument(content).then(editor => {
+      for (let i = 0; i < editor.document.lineCount; i++) {
+        const range = editor.document.lineAt(i).range;
+        editor.selections[i] = new vscode.Selection(range.start, range.end);
+      }
+
+      return vscode.commands
+        .executeCommand('extension.colorSpaceShift.hslSmartConvert')
+        .then(() => {
+          assert.equal(editor.document.getText(), expected);
+        })
+        .then(() => {
+          vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+        });
+    });
+  });
+});
