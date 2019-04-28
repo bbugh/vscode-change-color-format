@@ -48,9 +48,12 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-This extension uses the excellent [`color`](https://www.npmjs.com/package/color) package by Qix.
-
 ## License
 
 The `vscode-change-color-format` library is available as open source under the terms of the
 [MIT License](http://opensource.org/licenses/MIT). See the [LICENSE](LICENSE) file for the specifics.
+
+## Credits
+
+- This extension uses the excellent [`color`](https://www.npmjs.com/package/color) package by Qix.
+- The icon is from [IconFinder](https://www.iconfinder.com/icons/67268/color_settings_icon)/[Iconshock](https://www.iconshock.com/)

@@ -2,13 +2,29 @@
   "name": "change-color-format",
   "license": "MIT",
   "displayName": "Change Color Format",
-  "description": "Quickly transform #RRGGBB<->hsl(), rgb() and more.",
+  "description": "Quickly transform colors to and from #RRGGBB, hsl(), rgb() and more.",
   "version": "0.0.1",
   "publisher": "bbugh",
+  "icon": "icon.png",
+  "homepage": "https://github.com/bbugh/vscode-change-color-format",
+  "author": {
+    "name": "Brian Bugh",
+    "url": "http://brianbugh.me/"
+  },
+  "bugs": {
+    "url": "https://github.com/bbugh/vscode-change-color-format/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bbugh/vscode-change-color-format.git"
   },
+  "keywords": [
+    "color",
+    "replace",
+    "format",
+    "hsl",
+    "rgb"
+  ],
   "engines": {
     "vscode": "^1.5.0"
   },
