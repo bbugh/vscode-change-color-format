@@ -4,7 +4,7 @@
   "displayName": "Change Color Format",
   "description": "Quickly transform #RRGGBB<->hsl(), rgb() and more.",
   "version": "0.0.1",
-  "publisher": "Brian Bugh",
+  "publisher": "bbugh",
   "repository": {
     "type": "git",
     "url": "https://github.com/bbugh/vscode-change-color-format.git"
