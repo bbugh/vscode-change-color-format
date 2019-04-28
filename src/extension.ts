@@ -34,7 +34,7 @@ async function replaceColorText(conversion: ConversionCallback): Promise<boolean
   });
 }
 
-const commands = {
+export const commands = {
   hex: {
     description: 'Convert color to #RRGGBB/AA',
     // color library drops the alpha for hex :(
@@ -75,7 +75,9 @@ export function activate(context: vscode.ExtensionContext): void {
       description: commands[label].description
     }));
 
-    vscode.window.showQuickPick(items, opts).then(option => commands[option.label].transform());
+    vscode.window
+      .showQuickPick(items, opts)
+      .then(option => commands[option.label] && commands[option.label].transform());
   });
 
   // Create individual commands

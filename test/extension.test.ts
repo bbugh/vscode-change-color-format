@@ -1,9 +1,7 @@
-// The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
+import * as sinon from 'sinon';
+import { commands } from '../src/extension';
 
 async function openDocument(content: string): Promise<vscode.TextEditor> {
   const uri = vscode.Uri.parse(`untitled:tmp-${Math.random()}.txt`);
@@ -35,6 +33,24 @@ async function assertCommandResult(command: string, content: string, result: str
       vscode.commands.executeCommand('workbench.action.closeActiveEditor');
     });
 }
+
+suite('commands quick pick', () => {
+  test('adds the transform commands to the showQuickPick drop down', () => {
+    const quickPickSpy = sinon
+      .stub(vscode.window, 'showQuickPick')
+      .resolves({ label: 'anything', description: 'anything' });
+
+    const items: vscode.QuickPickItem[] = Object.entries(commands).map(([key, cmd]) => ({
+      label: key,
+      description: cmd.description
+    }));
+
+    return vscode.commands.executeCommand('extension.colorSpaceShift.commands').then(() => {
+      assert(quickPickSpy.calledOnce, 'showQuickPick is called once');
+      assert(quickPickSpy.calledWith(items), 'showQuickPick is called with the commands');
+    });
+  });
+});
 
 suite('hex command', () => {
   const command = 'extension.colorSpaceShift.hexSmartConvert';
