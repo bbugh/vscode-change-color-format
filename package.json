@@ -1,10 +1,14 @@
 {
-  "name": "color-space-shift",
+  "name": "change-color-format",
   "license": "MIT",
-  "displayName": "Color Space Shift",
+  "displayName": "Change Color Format",
   "description": "Quickly transform #RRGGBB<->hsl(), rgb() and more.",
-  "version": "1.0.0",
-  "publisher": "bbugh",
+  "version": "0.0.1",
+  "publisher": "Brian Bugh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bbugh/vscode-change-color-format.git"
+  },
   "engines": {
     "vscode": "^1.5.0"
   },
@@ -12,28 +16,28 @@
     "Formatters"
   ],
   "activationEvents": [
-    "onCommand:extension.colorSpaceShift.commands",
-    "onCommand:extension.colorSpaceShift.hexSmartConvert",
-    "onCommand:extension.colorSpaceShift.hslSmartConvert",
-    "onCommand:extension.colorSpaceShift.rgbSmartConvert"
+    "onCommand:extension.changeColorFormat.commands",
+    "onCommand:extension.changeColorFormat.hexSmartConvert",
+    "onCommand:extension.changeColorFormat.hslSmartConvert",
+    "onCommand:extension.changeColorFormat.rgbSmartConvert"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.colorSpaceShift.commands",
+        "command": "extension.changeColorFormat.commands",
         "title": "Convert Color..."
       },
       {
-        "command": "extension.colorSpaceShift.hexSmartConvert",
+        "command": "extension.changeColorFormat.hexSmartConvert",
         "title": "Convert Color to #RRGGBB/AA"
       },
       {
-        "command": "extension.colorSpaceShift.hslSmartConvert",
+        "command": "extension.changeColorFormat.hslSmartConvert",
         "title": "Convert Color to hsl/hsla()"
       },
       {
-        "command": "extension.colorSpaceShift.rgbSmartConvert",
+        "command": "extension.changeColorFormat.rgbSmartConvert",
         "title": "Convert Color to rgb/rgba()"
       }
     ]

@@ -47,7 +47,7 @@ suite('commands quick pick', () => {
       description: cmd.description
     }));
 
-    return vscode.commands.executeCommand('extension.colorSpaceShift.commands').then(() => {
+    return vscode.commands.executeCommand('extension.changeColorFormat.commands').then(() => {
       assert(quickPickSpy.calledOnce, 'showQuickPick is called once');
       assert(quickPickSpy.calledWith(items), 'showQuickPick is called with the commands');
     });
@@ -55,7 +55,7 @@ suite('commands quick pick', () => {
 });
 
 suite('hex command', () => {
-  const command = 'extension.colorSpaceShift.hexSmartConvert';
+  const command = 'extension.changeColorFormat.hexSmartConvert';
 
   test('converts hsl to 6 letter hex', () => {
     return assertCommandResult(command, 'hsl(18, 36%, 52%)', '#b17359');
@@ -75,7 +75,7 @@ suite('hex command', () => {
 });
 
 suite('hsl', () => {
-  const command = 'extension.colorSpaceShift.hslSmartConvert';
+  const command = 'extension.changeColorFormat.hslSmartConvert';
 
   test('converts 3 letter hex to hsl', () => {
     return assertCommandResult(command, '#abc', 'hsl(210, 25%, 73%)');
@@ -103,7 +103,7 @@ suite('hsl', () => {
 });
 
 suite('rgb', () => {
-  const command = 'extension.colorSpaceShift.rgbSmartConvert';
+  const command = 'extension.changeColorFormat.rgbSmartConvert';
 
   test('converts 3 letter hex to rgb', () => {
     return assertCommandResult(command, '#def', 'rgb(221, 238, 255)');
@@ -140,7 +140,7 @@ suite('editor selections', () => {
       const messageStub = sinon.stub(vscode.window, 'showErrorMessage');
 
       return vscode.commands
-        .executeCommand('extension.colorSpaceShift.hslSmartConvert')
+        .executeCommand('extension.changeColorFormat.hslSmartConvert')
         .then(() => {
           assert(messageStub.calledOnce);
           assert(messageStub.calledWith(`Could not convert color '${content}', unknown format.`));
@@ -160,7 +160,7 @@ suite('editor selections', () => {
       }
 
       return vscode.commands
-        .executeCommand('extension.colorSpaceShift.hslSmartConvert')
+        .executeCommand('extension.changeColorFormat.hslSmartConvert')
         .then(() => {
           assert.equal(editor.document.getText(), expected);
         })

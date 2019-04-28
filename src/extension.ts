@@ -64,7 +64,7 @@ export const commands = {
 // your extension is activated the very first time the command is executed
 export function activate(_context: vscode.ExtensionContext): void {
   // Register quick pick commands
-  vscode.commands.registerCommand('extension.colorSpaceShift.commands', () => {
+  vscode.commands.registerCommand('extension.changeColorFormat.commands', () => {
     const opts: vscode.QuickPickOptions = {
       matchOnDescription: true,
       placeHolder: 'Which color space would you like to shift to?'
@@ -82,7 +82,7 @@ export function activate(_context: vscode.ExtensionContext): void {
 
   // Create individual commands
   Object.entries(commands).forEach(([key, options]) => {
-    vscode.commands.registerCommand(`extension.colorSpaceShift.${key}SmartConvert`, options.transform);
+    vscode.commands.registerCommand(`extension.changeColorFormat.${key}SmartConvert`, options.transform);
   });
 }
 
