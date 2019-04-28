@@ -1,9 +1,9 @@
 {
   "name": "color-space-shift",
   "license": "MIT",
-  "displayName": "color-space-shift",
-  "description": "Change color spaces from Hex to HSL and more.",
-  "version": "0.0.1",
+  "displayName": "Color Space Shift",
+  "description": "Quickly transform #RRGGBB<->hsl(), rgb() and more.",
+  "version": "1.0.0",
   "publisher": "bbugh",
   "engines": {
     "vscode": "^1.5.0"
