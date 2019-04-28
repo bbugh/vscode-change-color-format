@@ -20,6 +20,10 @@ function editorSelectAll(editor: vscode.TextEditor): vscode.TextEditor {
   return editor;
 }
 
+function closeEditor(): void {
+  vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+}
+
 async function assertCommandResult(command: string, content: string, result: string): Promise<void> {
   const editor = await openDocument(content);
   editorSelectAll(editor);
@@ -29,9 +33,7 @@ async function assertCommandResult(command: string, content: string, result: str
     .then(() => {
       assert.equal(editor.document.getText(), result);
     })
-    .then(() => {
-      vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-    });
+    .then(closeEditor);
 }
 
 suite('commands quick pick', () => {
@@ -128,7 +130,25 @@ suite('rgb', () => {
   });
 });
 
-suite('multi-select replace', () => {
+suite('editor selections', () => {
+  test('transforming invalid selection', () => {
+    const content = 'tricksy hobbits';
+
+    return openDocument('tricksy hobbits').then(editor => {
+      editorSelectAll(editor);
+
+      const messageStub = sinon.stub(vscode.window, 'showErrorMessage');
+
+      return vscode.commands
+        .executeCommand('extension.colorSpaceShift.hslSmartConvert')
+        .then(() => {
+          assert(messageStub.calledOnce);
+          assert(messageStub.calledWith(`Could not convert color '${content}', unknown format.`));
+        })
+        .then(closeEditor);
+    });
+  });
+
   test('replacing multiple colors at once via multi-select', () => {
     const content = `tomato\nhsl(100,50%,50%)\nrgba(50, 150, 250)\nmintcream`;
     const expected = `hsl(9, 100%, 64%)\nhsl(100, 50%, 50%)\nhsl(210, 95%, 59%)\nhsl(150, 100%, 98%)`;
@@ -144,9 +164,7 @@ suite('multi-select replace', () => {
         .then(() => {
           assert.equal(editor.document.getText(), expected);
         })
-        .then(() => {
-          vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-        });
+        .then(closeEditor);
     });
   });
 });
