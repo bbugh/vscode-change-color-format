@@ -82,7 +82,7 @@
     "prettier": "^1.17.0",
     "sinon": "^7.3.2",
     "typescript": "^3.4.5",
-    "vsce": "^1.59.0",
+    "vsce": "^1.60.0",
     "vscode": "^1.0.0"
   },
   "dependencies": {
