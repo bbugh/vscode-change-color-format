@@ -24,4 +24,4 @@ install:
 script:
   - yarn format
   - yarn lint
-  - yarn test --silent
+  - yarn test
