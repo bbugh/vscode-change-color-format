@@ -36,14 +36,16 @@ export const commands = {
     // color library drops the alpha for hex :(
     transform: () =>
       replaceColorText(color => {
-        const rgbColor = color.rgb().object();
+        const { alpha } = color.object();
 
-        const red = Math.round(rgbColor.r).toString(16);
-        const green = Math.round(rgbColor.g).toString(16);
-        const blue = Math.round(rgbColor.b).toString(16);
-        const alpha = rgbColor.alpha ? Math.round(255 * rgbColor.alpha).toString(16) : '';
+        const alphaString =
+          alpha !== undefined
+            ? Math.round(255 * alpha)
+                .toString(16)
+                .padStart(2, "0")
+            : "";
 
-        return '#' + red + green + blue + alpha;
+        return color.hex() + alphaString;
       })
   },
   hsl: {
