@@ -7,6 +7,10 @@ type ConversionCallback = (color: Color) => string;
 
 async function replaceColorText(conversion: ConversionCallback): Promise<boolean> {
   const editor = vscode.window.activeTextEditor;
+  if (!editor) {
+    return false
+  }
+
   const { document, selections } = editor;
 
   return editor.edit(editBuilder => {
@@ -30,7 +34,13 @@ async function replaceColorText(conversion: ConversionCallback): Promise<boolean
   });
 }
 
-export const commands = {
+type CommandId = 'hex' | 'hsl' | 'rgb'
+interface Command {
+  description: string,
+  transform: () => Promise<boolean>
+}
+
+export const commands: Record<CommandId, Command>  = {
   hex: {
     description: 'Convert color to #RRGGBB/AA',
     // color library drops the alpha for hex :(
@@ -60,26 +70,29 @@ export const commands = {
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(_context: vscode.ExtensionContext): void {
+export function activate(context: vscode.ExtensionContext): void {
   // Register quick pick commands
-  vscode.commands.registerCommand('extension.changeColorFormat.commands', () => {
+  let disposable = vscode.commands.registerCommand('extension.changeColorFormat.commands', () => {
     const opts: vscode.QuickPickOptions = {
       matchOnDescription: true,
       placeHolder: 'Which color space would you like to shift to?'
     };
 
-    const items: vscode.QuickPickItem[] = Object.keys(commands).map(label => ({
+    const items: vscode.QuickPickItem[] = (Object.keys(commands) as CommandId[]).map(label => ({
       label,
       description: commands[label].description
     }));
 
     vscode.window
       .showQuickPick(items, opts)
-      .then(option => commands[option.label] && commands[option.label].transform());
+      .then(option => option && commands[option.label as CommandId]?.transform());
   });
+
+	context.subscriptions.push(disposable);
 
   // Create individual commands
   Object.entries(commands).forEach(([key, options]) => {
-    vscode.commands.registerCommand(`extension.changeColorFormat.${key}SmartConvert`, options.transform);
+		disposable = vscode.commands.registerCommand(`extension.changeColorFormat.${key}SmartConvert`, options.transform);
+		context.subscriptions.push(disposable);
   });
 }

@@ -59,31 +59,35 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "format": "prettier --check src/**/*.ts test/**/*.ts",
-    "lint": "eslint src/**/*.ts test/**/*.ts",
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
     "package": "vsce package",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "CODE_DISABLE_EXTENSIONS=true node ./node_modules/vscode/bin/test"
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^12.0.0",
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
     "@types/sinon": "^7.0.11",
-    "@typescript-eslint/eslint-plugin": "^1.9.0",
-    "@typescript-eslint/parser": "^1.9.0",
-    "eslint": "^5.16.0",
+    "@types/vscode": "^1.57.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "glob": "^7.1.7",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
-    "mocha": "^6.1.4",
-    "prettier": "^1.17.1",
+    "mocha": "^8.4.0",
+    "prettier": "^2.3.2",
     "sinon": "^7.3.2",
-    "typescript": "^3.4.5",
+    "typescript": "^4.3.2",
     "vsce": "^1.61.0",
-    "vscode": "^1.1.34"
+    "vscode-test": "^1.5.2"
   },
   "dependencies": {
     "color": "^3.1.1"
@@ -95,7 +99,6 @@
   },
   "lint-staged": {
     "*.ts": [
-      "prettier --write --",
       "eslint --fix --",
       "git add"
     ]

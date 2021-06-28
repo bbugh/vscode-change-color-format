@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as sinon from 'sinon';
-import { commands } from '../src/extension';
+import { commands } from '../../extension';
 
 async function openDocument(content: string): Promise<vscode.TextEditor> {
   const uri = vscode.Uri.parse(`untitled:tmp-${Math.random()}.txt`);
