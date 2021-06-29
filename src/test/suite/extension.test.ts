@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as sinon from 'sinon';
 import { commands } from '../../extension';
+import { EOL } from 'os';
 
 async function openDocument(content: string): Promise<vscode.TextEditor> {
   const uri = vscode.Uri.parse(`untitled:tmp-${Math.random()}.txt`);
@@ -31,7 +32,7 @@ async function assertCommandResult(command: string, content: string, result: str
   return vscode.commands
     .executeCommand(command)
     .then(() => {
-      assert.equal(editor.document.getText(), result);
+      assert.strictEqual(editor.document.getText(), result);
     })
     .then(closeEditor);
 }
@@ -151,8 +152,13 @@ suite('editor selections', () => {
   });
 
   test('replacing multiple colors at once via multi-select', () => {
-    const content = `tomato\nhsl(100,50%,50%)\nrgba(50, 150, 250)\nmintcream`;
-    const expected = `hsl(9.1, 100%, 63.9%)\nhsl(100, 50%, 50%)\nhsl(210, 95.2%, 58.8%)\nhsl(150, 100%, 98%)`;
+    const content = ['tomato', 'hsl(100,50%,50%)', 'rgba(50, 150, 250)', 'mintcream'].join(EOL);
+    const expected = [
+      'hsl(9.1, 100%, 63.9%)',
+      'hsl(100, 50%, 50%)',
+      'hsl(210, 95.2%, 58.8%)',
+      'hsl(150, 100%, 98%)',
+    ].join(EOL);
 
     return openDocument(content).then((editor) => {
       for (let i = 0; i < editor.document.lineCount; i++) {
@@ -163,7 +169,7 @@ suite('editor selections', () => {
       return vscode.commands
         .executeCommand('extension.changeColorFormat.hslSmartConvert')
         .then(() => {
-          assert.equal(editor.document.getText(), expected);
+          assert.strictEqual(editor.document.getText(), expected);
         })
         .then(closeEditor);
     });

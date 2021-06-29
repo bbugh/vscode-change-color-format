@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      # fork to always run cache save, see https://github.com/actions/cache/issues/92
+      # Remove after https://github.com/actions/setup-node/pull/272 is launched
+      - name: Restore yarn cache
+        uses: bbugh/cache@2c6138afa1edfcfde8a4c8f3f2db596fbc00ae8b
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            node_modules
+          key: ${{ runner.os }}-v1-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-v1-yarn-
+      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: xvfb-run -a yarn test (Linux)
+        run: xvfb-run -a yarn test
+        if: runner.os == 'Linux'
+      - name: yarn test (MacOS/Windows)
+        run: yarn test
+        if: runner.os != 'Linux'
