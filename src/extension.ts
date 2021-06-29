@@ -3,9 +3,7 @@
 import * as vscode from 'vscode';
 import * as Color from 'color';
 
-type ConversionCallback = (color: Color) => string;
-
-async function replaceColorText(conversion: ConversionCallback): Promise<boolean> {
+async function replaceColorText(conversion: (color: Color) => string): Promise<boolean> {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     return false;
