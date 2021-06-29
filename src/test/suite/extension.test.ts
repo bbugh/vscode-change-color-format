@@ -1,13 +1,13 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as sinon from 'sinon';
-import { commands } from '../src/extension';
+import { commands } from '../../extension';
 
 async function openDocument(content: string): Promise<vscode.TextEditor> {
   const uri = vscode.Uri.parse(`untitled:tmp-${Math.random()}.txt`);
   const document = await vscode.workspace.openTextDocument(uri);
   const editor = await vscode.window.showTextDocument(document);
-  await editor.edit(edit => edit.insert(new vscode.Position(0, 0), content));
+  await editor.edit((edit) => edit.insert(new vscode.Position(0, 0), content));
 
   return editor;
 }
@@ -21,7 +21,7 @@ function editorSelectAll(editor: vscode.TextEditor): vscode.TextEditor {
 }
 
 function closeEditor(): void {
-  vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+  void vscode.commands.executeCommand('workbench.action.closeActiveEditor');
 }
 
 async function assertCommandResult(command: string, content: string, result: string): Promise<void> {
@@ -44,7 +44,7 @@ suite('commands quick pick', () => {
 
     const items: vscode.QuickPickItem[] = Object.entries(commands).map(([key, cmd]) => ({
       label: key,
-      description: cmd.description
+      description: cmd.description,
     }));
 
     return vscode.commands.executeCommand('extension.changeColorFormat.commands').then(() => {
@@ -134,7 +134,7 @@ suite('editor selections', () => {
   test('transforming invalid selection', () => {
     const content = 'tricksy hobbits';
 
-    return openDocument('tricksy hobbits').then(editor => {
+    return openDocument('tricksy hobbits').then((editor) => {
       editorSelectAll(editor);
 
       const messageStub = sinon.stub(vscode.window, 'showErrorMessage');
@@ -153,7 +153,7 @@ suite('editor selections', () => {
     const content = `tomato\nhsl(100,50%,50%)\nrgba(50, 150, 250)\nmintcream`;
     const expected = `hsl(9, 100%, 64%)\nhsl(100, 50%, 50%)\nhsl(210, 95%, 59%)\nhsl(150, 100%, 98%)`;
 
-    return openDocument(content).then(editor => {
+    return openDocument(content).then((editor) => {
       for (let i = 0; i < editor.document.lineCount; i++) {
         const range = editor.document.lineAt(i).range;
         editor.selections[i] = new vscode.Selection(range.start, range.end);
