@@ -3,7 +3,7 @@
   "license": "MIT",
   "displayName": "Change Color Format",
   "description": "Quickly transform colors to and from #RRGGBB, hsl(), rgb() and more.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "bbugh",
   "icon": "icon.png",
   "homepage": "https://github.com/bbugh/vscode-change-color-format",
