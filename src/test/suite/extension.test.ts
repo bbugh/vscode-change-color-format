@@ -78,7 +78,7 @@ suite('hsl', () => {
   const command = 'extension.changeColorFormat.hslSmartConvert';
 
   test('converts 3 letter hex to hsl', () => {
-    return assertCommandResult(command, '#abc', 'hsl(210, 25%, 73%)');
+    return assertCommandResult(command, '#abc', 'hsl(210, 25%, 73.3%)');
   });
 
   test('converts 6 letter hex to hsl', () => {
@@ -94,11 +94,16 @@ suite('hsl', () => {
   });
 
   test('converts rgba to hsla', () => {
-    return assertCommandResult(command, 'rgba(46, 139, 87, 0.4)', 'hsla(146, 50%, 36%, 0.4)');
+    return assertCommandResult(command, 'rgba(46, 139, 87, 0.4)', 'hsla(146.5, 50.3%, 36.3%, 0.4)');
   });
 
   test('converts color keywords to hsl', () => {
     return assertCommandResult(command, 'rebeccapurple', 'hsl(270, 50%, 40%)');
+  });
+
+  // regression because of https://github.com/Qix-/color/issues/127
+  test('converts `tomato` color keyword to hsl', () => {
+    return assertCommandResult(command, 'tomato', 'hsl(9.1, 100%, 63.9%)');
   });
 });
 
@@ -114,7 +119,7 @@ suite('rgb', () => {
   });
 
   test('converts 8 letter hex to rgba', () => {
-    return assertCommandResult(command, '#DEADBEEF', 'rgba(222, 173, 190, 0.94)');
+    return assertCommandResult(command, '#DEADBEEF', 'rgba(222, 173, 190, 0.9)');
   });
 
   test('converts hsl to rgb', () => {
@@ -123,10 +128,6 @@ suite('rgb', () => {
 
   test('converts hsla to rgba', () => {
     return assertCommandResult(command, 'hsla(164, 18%, 90%, 0.7)', 'rgba(225, 234, 232, 0.7)');
-  });
-
-  test('converts color keywords to rgb', () => {
-    return assertCommandResult(command, 'tomato', 'rgb(255, 99, 71)');
   });
 });
 
@@ -151,7 +152,7 @@ suite('editor selections', () => {
 
   test('replacing multiple colors at once via multi-select', () => {
     const content = `tomato\nhsl(100,50%,50%)\nrgba(50, 150, 250)\nmintcream`;
-    const expected = `hsl(9, 100%, 64%)\nhsl(100, 50%, 50%)\nhsl(210, 95%, 59%)\nhsl(150, 100%, 98%)`;
+    const expected = `hsl(9.1, 100%, 63.9%)\nhsl(100, 50%, 50%)\nhsl(210, 95.2%, 58.8%)\nhsl(150, 100%, 98%)`;
 
     return openDocument(content).then((editor) => {
       for (let i = 0; i < editor.document.lineCount; i++) {

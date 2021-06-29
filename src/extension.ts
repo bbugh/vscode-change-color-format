@@ -20,7 +20,7 @@ async function replaceColorText(conversion: ConversionCallback): Promise<boolean
       let color: Color;
 
       try {
-        color = Color(text.toLowerCase());
+        color = Color(text);
       } catch {
         // Trim the selected text in case it's really long so the error message doesn't blow up
         const badSelection = text.substring(0, 30);
@@ -28,7 +28,7 @@ async function replaceColorText(conversion: ConversionCallback): Promise<boolean
         return;
       }
 
-      const colorString = conversion(color);
+      const colorString = conversion(color).toLowerCase();
       editBuilder.replace(selection, colorString);
     });
   });
@@ -39,6 +39,43 @@ interface Command {
   description: string;
   transform: () => Promise<boolean>;
 }
+
+// HACK: Color has a bug in alpha that doesn't actually round:
+// https://github.com/Qix-/color/issues/127
+const formatter = Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 1,
+});
+
+function fixColorPkgHslAlphaBug(color: Color): string {
+  const array = color.array();
+
+  const hue = formatter.format(color.hue());
+  const saturation = formatter.format(color.saturationl());
+  const lightness = formatter.format(color.lightness());
+  const alpha = formatter.format(color.alpha());
+
+  if (array.length === 3) {
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  } else {
+    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+  }
+}
+
+function fixColorPkgRgbAlphaBug(color: Color): string {
+  const array = color.array();
+  if (array.length === 3) {
+    return color.string();
+  }
+
+  const red = Math.round(color.red());
+  const green = Math.round(color.green());
+  const blue = Math.round(color.blue());
+  const alpha = formatter.format(color.alpha());
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+// END HACK
 
 export const commands: Record<CommandId, Command> = {
   hex: {
@@ -60,11 +97,11 @@ export const commands: Record<CommandId, Command> = {
   },
   hsl: {
     description: 'Convert color to hsl/hsla()',
-    transform: () => replaceColorText(color => color.hsl().round().string()), // prettier-ignore
+    transform: () => replaceColorText((color) => fixColorPkgHslAlphaBug(color.hsl())),
   },
   rgb: {
     description: 'Convert color to rgb/rgba()',
-    transform: () => replaceColorText(color => color.rgb().round().string()), // prettier-ignore
+    transform: () => replaceColorText((color) => fixColorPkgRgbAlphaBug(color.rgb())),
   },
 };
 
