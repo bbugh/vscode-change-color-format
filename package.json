@@ -37,7 +37,7 @@
     "onCommand:extension.changeColorFormat.hslSmartConvert",
     "onCommand:extension.changeColorFormat.rgbSmartConvert"
   ],
-  "main": "./out/src/extension",
+  "main": "./out/extension",
   "contributes": {
     "commands": [
       {
@@ -63,7 +63,7 @@
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",
     "package": "vsce package",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "yarn run lint --fix && rimraf out && yarn run compile ",
     "test": "node ./out/test/runTest.js",
     "watch": "tsc -watch -p ./"
   },
