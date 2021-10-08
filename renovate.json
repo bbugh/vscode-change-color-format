@@ -4,6 +4,8 @@
     "config:base",
     "schedule:earlyMondays",
     ":automergeAll",
-    ":automergeBranch"
+    ":automergeBranch",
+    ":semanticCommits",
+    ":label(dependencies)"
   ]
 }
