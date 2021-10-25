@@ -23,7 +23,7 @@ jobs:
       # fork to always run cache save, see https://github.com/actions/cache/issues/92
       # Remove after https://github.com/actions/setup-node/pull/272 is launched
       - name: Restore yarn cache
-        uses: bbugh/cache@2c6138afa1edfcfde8a4c8f3f2db596fbc00ae8b
+        uses: bbugh/cache@c64c572235d810460d0d6876e9c705ad5002b353
         id: yarn-cache
         with:
           path: |
