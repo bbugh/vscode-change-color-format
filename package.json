@@ -2,8 +2,8 @@
   "name": "change-color-format",
   "license": "MIT",
   "displayName": "Change Color Format",
-  "description": "Quickly transform colors to and from #RRGGBB, hsl(), rgb() and more.",
-  "version": "1.1.0",
+  "description": "Quickly transform colors to and from hex (#RRGGBB/AA), hsl(), rgb() and more.",
+  "version": "1.2.0",
   "publisher": "bbugh",
   "icon": "icon.png",
   "homepage": "https://github.com/bbugh/vscode-change-color-format",
@@ -20,13 +20,14 @@
   },
   "keywords": [
     "color",
-    "replace",
+    "css",
     "format",
     "hsl",
+    "replace",
     "rgb"
   ],
   "engines": {
-    "vscode": "^1.5.0"
+    "vscode": "^1.14.0"
   },
   "capabilities": {
     "untrustedWorkspaces": {
@@ -72,7 +73,7 @@
     "test": "node ./out/test/runTest.js",
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "yarn run pretest",
-    "vscode:package": "vsce package",
+    "vscode:package": "vsce package --out out",
     "vscode:publish": "vsce publish"
   },
   "devDependencies": {
@@ -81,7 +82,7 @@
     "@types/mocha": "9.0.0",
     "@types/node": "16.11.7",
     "@types/sinon": "10.0.6",
-    "@types/vscode": "1.62.0",
+    "@types/vscode": "1.14.0",
     "@typescript-eslint/eslint-plugin": "5.3.1",
     "@typescript-eslint/parser": "5.3.1",
     "eslint": "8.2.0",

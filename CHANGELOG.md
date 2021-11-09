@@ -2,6 +2,13 @@
 
 All notable changes to the "change-color-format" extension will be documented in this file.
 
+## 1.2.0
+
+- feat: Allow trusted and virtual workspaces
+- feat: Add "hex" to find palette format easier
+- test: Disable running other extensions
+- chore(deps): Upgrade to all latest
+
 ## 1.1.0
 
 - fix: rgb(a) to hex conversion (#18) (Thanks @fritz-c)
