@@ -28,6 +28,12 @@
   "engines": {
     "vscode": "^1.5.0"
   },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
   "categories": [
     "Formatters"
   ],
