@@ -77,7 +77,7 @@ function fixColorPkgRgbAlphaBug(color: Color): string {
 
 export const commands: Record<CommandId, Command> = {
   hex: {
-    description: 'Convert color to #RRGGBB/AA',
+    description: 'Convert color to hex (#RRGGBB/AA)',
     // color library drops the alpha for hex :(
     transform: () =>
       replaceColorText((color) => {

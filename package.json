@@ -52,7 +52,7 @@
       },
       {
         "command": "extension.changeColorFormat.hexSmartConvert",
-        "title": "Convert Color to #RRGGBB/AA"
+        "title": "Convert Color to hex (#RRGGBB/AA)"
       },
       {
         "command": "extension.changeColorFormat.hslSmartConvert",
