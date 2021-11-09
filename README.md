@@ -12,7 +12,7 @@ Formats supported by this extension:
 
 - color names ('seagreen', 'darkgrey')
 - #RGB, #RRGGBB
-- #RGBA, #RRGGBBAA ([not supported by IE/Edge](https://caniuse.com/#feat=css-rrggbbaa))
+- #RGBA, #RRGGBBAA ([not supported by IE](https://caniuse.com/#feat=css-rrggbbaa))
 - rgb(), rgba()
 - hsl(), hsla()
 
