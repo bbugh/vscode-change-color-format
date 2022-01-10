@@ -80,7 +80,7 @@
     "@types/color": "3.0.2",
     "@types/glob": "7.2.0",
     "@types/mocha": "9.0.0",
-    "@types/node": "16.11.17",
+    "@types/node": "16.11.19",
     "@types/sinon": "10.0.6",
     "@types/vscode": "1.62.0",
     "@typescript-eslint/eslint-plugin": "5.3.1",
