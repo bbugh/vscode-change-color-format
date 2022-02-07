@@ -161,10 +161,12 @@ suite('editor selections', () => {
     ].join(EOL);
 
     return openDocument(content).then((editor) => {
+      const selections = [];
       for (let i = 0; i < editor.document.lineCount; i++) {
         const range = editor.document.lineAt(i).range;
-        editor.selections[i] = new vscode.Selection(range.start, range.end);
+        selections.push(new vscode.Selection(range.start, range.end));
       }
+      editor.selections = selections;
 
       return vscode.commands
         .executeCommand('extension.changeColorFormat.hslSmartConvert')
