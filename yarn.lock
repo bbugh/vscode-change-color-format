@@ -135,9 +135,9 @@
   integrity sha512-QCWHkbMv4Y5U9oW10Uxbr45qMMSzl4OzijsozynUAgx3kEHUdXB00udx2dWDQ7f2TU2a2uuiFaRZjCe3unPpeg==
 
 "@types/node@*":
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.0.tgz#67c7b724e1bcdd7a8821ce0d5ee184d3b4dd525a"
-  integrity sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.1.tgz#e91bd73239b338557a84d1f67f7b9e0f25643870"
+  integrity sha512-CmR8+Tsy95hhwtZBKJBs0/FFq4XX7sDZHlGGf+0q+BRZfMbOTkzkj0AFAuTyXbObDIoanaBBW0+KEW+m3N16Wg==
 
 "@types/node@17.0.15":
   version "17.0.15"
@@ -777,9 +777,9 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
     once "^1.4.0"
 
 entities@^4.2.0, entities@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-4.3.0.tgz#62915f08d67353bb4eb67e3d62641a4059aec656"
-  integrity sha512-/iP1rZrSEJ0DTlPiX+jbzlA3eVkY/e8L8SozroF395fIqE3TYF/Nz7YOMAawta+vLmyJ/hkGNNPcSbMADCCXbg==
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.3.1.tgz#c34062a94c865c322f9d67b4384e4169bcede6a4"
+  integrity sha512-o4q/dYJlmyjP2zfnaWDUC6A3BQFmVTX+tZPezK7k0GLSU9QYCauscf5Y+qcEPzKL+EixVouYDgLQK5H9GrLpkg==
 
 entities@~2.1.0:
   version "2.1.0"
@@ -1026,9 +1026,9 @@ flat@^5.0.2:
   integrity sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==
 
 flatted@^3.1.0:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
-  integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.6.tgz#022e9218c637f9f3fc9c35ab9c9193f05add60b2"
+  integrity sha512-0sQoMh9s0BYsm+12Huy/rkKxVu4R1+r96YX5cG44rHV0pQ6iC3Q+mkoMFaGWObMFYQxCVT+ssG1ksneA2MI9KQ==
 
 fs-constants@^1.0.0:
   version "1.0.0"
@@ -1831,9 +1831,9 @@ punycode@^2.1.0:
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
 qs@^6.9.1:
-  version "6.10.5"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.5.tgz#974715920a80ff6a262264acd2c7e6c2a53282b4"
-  integrity sha512-O5RlPh0VFtR78y79rgcgKK4wbAI0C5zGVLztOIdpWX6ep368q5Hv6XRxDvXuZ9q3C6v+e3n8UfZZJw7IIG27eQ==
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
+  integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==
   dependencies:
     side-channel "^1.0.4"
 
