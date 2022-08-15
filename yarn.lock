@@ -135,9 +135,9 @@
   integrity sha512-QCWHkbMv4Y5U9oW10Uxbr45qMMSzl4OzijsozynUAgx3kEHUdXB00udx2dWDQ7f2TU2a2uuiFaRZjCe3unPpeg==
 
 "@types/node@*":
-  version "18.6.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
-  integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
+  version "18.7.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.3.tgz#432c89796eab539b7a30b7b8801a727b585238a4"
+  integrity sha512-LJgzOEwWuMTBxHzgBR/fhhBOWrvBjvO+zPteUgbbuQi80rYIZHrk1mNbRUqPZqSLP2H7Rwt1EFLL/tNLD1Xx/w==
 
 "@types/node@17.0.15":
   version "17.0.15"
@@ -1629,9 +1629,9 @@ nise@^5.1.1:
     path-to-regexp "^1.7.0"
 
 node-abi@^3.3.0:
-  version "3.22.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.22.0.tgz#00b8250e86a0816576258227edbce7bbe0039362"
-  integrity sha512-u4uAs/4Zzmp/jjsD9cyFYDXeISfUWaAVWshPmDZOFOv4Xl4SbzTXm53I04C2uRueYJ+0t5PEtLH/owbn2Npf/w==
+  version "3.24.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.24.0.tgz#b9d03393a49f2c7e147d0c99f180e680c27c1599"
+  integrity sha512-YPG3Co0luSu6GwOBsmIdGW6Wx0NyNDLg/hriIyDllVsNwnI6UeqaWShxC3lbH4LtEQUgoLP3XR1ndXiDAWvmRw==
   dependencies:
     semver "^7.3.5"
 
