@@ -1,9 +1,9 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import * as Color from 'color';
+import { parse } from './lib/color';
 
-async function replaceColorText(conversion: (color: Color) => string): Promise<boolean> {
+async function replaceColorText(conversion: (color: string) => string): Promise<boolean> {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     return false;
@@ -15,10 +15,10 @@ async function replaceColorText(conversion: (color: Color) => string): Promise<b
     selections.forEach((selection) => {
       const text = document.getText(selection);
 
-      let color: Color;
+      let color: string;
 
       try {
-        color = Color(text);
+        color = conversion(text);
       } catch {
         // Trim the selected text in case it's really long so the error message doesn't blow up
         const badSelection = text.substring(0, 30);
@@ -26,8 +26,7 @@ async function replaceColorText(conversion: (color: Color) => string): Promise<b
         return;
       }
 
-      const colorString = conversion(color).toLowerCase();
-      editBuilder.replace(selection, colorString);
+      editBuilder.replace(selection, color.toLowerCase());
     });
   });
 }
@@ -38,68 +37,18 @@ interface Command {
   transform: () => Promise<boolean>;
 }
 
-// HACK: Color has a bug in alpha that doesn't actually round:
-// https://github.com/Qix-/color/issues/127
-const formatter = Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 1,
-});
-
-function fixColorPkgHslAlphaBug(color: Color): string {
-  const array = color.array();
-
-  const hue = formatter.format(color.hue());
-  const saturation = formatter.format(color.saturationl());
-  const lightness = formatter.format(color.lightness());
-  const alpha = formatter.format(color.alpha());
-
-  if (array.length === 3) {
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-  } else {
-    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
-  }
-}
-
-function fixColorPkgRgbAlphaBug(color: Color): string {
-  const array = color.array();
-  if (array.length === 3) {
-    return color.string();
-  }
-
-  const red = Math.round(color.red());
-  const green = Math.round(color.green());
-  const blue = Math.round(color.blue());
-  const alpha = formatter.format(color.alpha());
-
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
-}
-// END HACK
-
 export const commands: Record<CommandId, Command> = {
   hex: {
     description: 'Convert color to hex (#RRGGBB/AA)',
-    // color library drops the alpha for hex :(
-    transform: () =>
-      replaceColorText((color) => {
-        const { alpha } = color.object();
-
-        const alphaString =
-          alpha !== undefined
-            ? Math.round(255 * alpha)
-                .toString(16)
-                .padStart(2, '0')
-            : '';
-
-        return color.hex() + alphaString;
-      }),
+    transform: () => replaceColorText((color) => parse(color).toHex()),
   },
   hsl: {
     description: 'Convert color to hsl/hsla()',
-    transform: () => replaceColorText((color) => fixColorPkgHslAlphaBug(color.hsl())),
+    transform: () => replaceColorText((color) => parse(color).toHSL3()),
   },
   rgb: {
     description: 'Convert color to rgb/rgba()',
-    transform: () => replaceColorText((color) => fixColorPkgRgbAlphaBug(color.rgb())),
+    transform: () => replaceColorText((color) => parse(color).toRGB3()),
   },
 };
 
