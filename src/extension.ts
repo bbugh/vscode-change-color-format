@@ -31,24 +31,35 @@ async function replaceColorText(conversion: (color: string) => string): Promise<
   });
 }
 
-type CommandId = 'hex' | 'hsl' | 'rgb';
+type CommandId = 'hex' | 'hsl' | 'rgb' | 'hsl4' | 'rgb4';
 interface Command {
   description: string;
   transform: () => Promise<boolean>;
+  enabled?: (config: vscode.WorkspaceConfiguration) => boolean;
 }
 
 export const commands: Record<CommandId, Command> = {
   hex: {
-    description: 'Convert color to hex (#RRGGBB/AA)',
+    description: 'Convert Color to hex #RRGGBB[AA]',
     transform: () => replaceColorText((color) => parse(color).toHex()),
   },
   hsl: {
-    description: 'Convert color to hsl/hsla()',
+    description: 'Convert Color to hsl/hsla() (CSS3 legacy)',
     transform: () => replaceColorText((color) => parse(color).toHSL3()),
+    enabled: (config) => !!config.get('showCSS3LegacyConversions'),
   },
   rgb: {
-    description: 'Convert color to rgb/rgba()',
+    description: 'Convert Color to rgb/rgba() (CSS3 legacy)',
     transform: () => replaceColorText((color) => parse(color).toRGB3()),
+    enabled: (config) => !!config.get('showCSS3LegacyConversions'),
+  },
+  hsl4: {
+    description: 'Convert Color to hsl()',
+    transform: () => replaceColorText((color) => parse(color).toHSL4()),
+  },
+  rgb4: {
+    description: 'Convert Color to rgb()',
+    transform: () => replaceColorText((color) => parse(color).toRGB4()),
   },
 };
 
@@ -57,15 +68,19 @@ export const commands: Record<CommandId, Command> = {
 export function activate(context: vscode.ExtensionContext): void {
   // Register quick pick commands
   let disposable = vscode.commands.registerCommand('extension.changeColorFormat.commands', () => {
+    const config = vscode.workspace.getConfiguration('changeColorFormat');
+
     const opts: vscode.QuickPickOptions = {
       matchOnDescription: true,
       placeHolder: 'Which color space would you like to shift to?',
     };
 
-    const items: vscode.QuickPickItem[] = (Object.keys(commands) as CommandId[]).map((label) => ({
-      label,
-      description: commands[label].description,
-    }));
+    const items = Object.entries(commands)
+      .filter(([, command]) => typeof command.enabled !== 'function' || command.enabled(config))
+      .map(([label, _]) => ({
+        label,
+        description: commands[label as CommandId].description,
+      }));
 
     void vscode.window
       .showQuickPick(items, opts)

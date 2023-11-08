@@ -40,6 +40,16 @@
   ],
   "main": "./out/extension",
   "contributes": {
+    "configuration": {
+      "title": "Convert Color Format",
+      "properties": {
+        "changeColorFormat.showCSS3LegacyConversions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the legacy CSS3 conversion for hsl/rgb"
+        }
+      }
+    },
     "commands": [
       {
         "command": "extension.changeColorFormat.commands",
@@ -47,15 +57,25 @@
       },
       {
         "command": "extension.changeColorFormat.hexSmartConvert",
-        "title": "Convert Color to hex (#RRGGBB/AA)"
+        "title": "Convert Color to hex #RRGGBB[AA]"
       },
       {
         "command": "extension.changeColorFormat.hslSmartConvert",
-        "title": "Convert Color to hsl/hsla()"
+        "title": "Convert Color to hsl/hsla() (CSS3)",
+        "enablement": "config.changeColorFormat.showCSS3LegacyConversions"
       },
       {
         "command": "extension.changeColorFormat.rgbSmartConvert",
-        "title": "Convert Color to rgb/rgba()"
+        "title": "Convert Color to rgb/rgba() (CSS3)",
+        "enablement": "config.changeColorFormat.showCSS3LegacyConversions"
+      },
+      {
+        "command": "extension.changeColorFormat.hsl4SmartConvert",
+        "title": "Convert Color to hsl()"
+      },
+      {
+        "command": "extension.changeColorFormat.rgb4SmartConvert",
+        "title": "Convert Color to rgb()"
       }
     ]
   },
